@@ -90,12 +90,15 @@ class AdaCat {
     // more hungry
     var healthScore = sizeScore - this.hunger
 
+    if (healthScore < 4) {
+      this.message = 'Take your cat to the vet!';
+    }
+
     // max returns the biggest value, so health
     // will never go below 0
     if (healthScore < 0) {
       healthScore = 0
     }
-
     return healthScore
   }
 

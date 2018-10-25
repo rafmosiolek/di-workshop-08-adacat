@@ -259,6 +259,14 @@ describe('AdaCat', function() {
       var result = myCat.getHealth()
       expect(result).to.equal(0)
     })
+
+    it('prompt user to take cat to the vet when health points are low', function() {
+      var myCat = new AdaCat('pusio', 'raf');
+      myCat.size = 1
+      myCat.hunger = 4
+      var result = myCat.getHealth()
+      expect(myCat.message).to.equal('Take your cat to the vet!');
+    })
   })
   describe('#setTiredness', function() {
     it('increasing the fatigue attribute by 1', function() {
