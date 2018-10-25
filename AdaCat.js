@@ -6,6 +6,7 @@ class AdaCat {
     this.isSleeping = false
     this.size = 30
     this.fatigue = 0;
+    this.message = '';
   }
 
   setHunger(newHunger) {
@@ -31,30 +32,37 @@ class AdaCat {
       'they weigh ' + this.size + ' tonnes.',
       'their health is ' + this.getHealth() + '/30.',
       'their fatigue is ' + this.fatigue + '/15.',
-      sleepLine
+      sleepLine,
+      this.message
     ]
 
     return lines.join('\n')
   }
 
   feed() {
+    if(this.isSleeping) {
+      this.message = this.name + ' is sleeping! You cannot feed them now!';
+      return false;
+    }
     var hunger = this.hunger - 1
     this.setTiredness(1);
 
     if (hunger < 3) {
       this.size = this.size + 1
     }
-
+    this.message = this.name + ' is eating';
     this.setHunger(hunger)
   }
 
   nap() {
     this.isSleeping = true
     this.fatigue = 0;
+    this.message = this.name + ' is sleeping';
   }
 
   wakeUp() {
     this.isSleeping = false
+    this.message = '';
   }
 
   play() {
@@ -64,6 +72,7 @@ class AdaCat {
       this.size = this.size - 1
     }
     this.setHunger(hunger)
+    this.message = this.name + ' is playing';
   }
 
   getHealth() {

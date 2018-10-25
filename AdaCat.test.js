@@ -89,6 +89,13 @@ describe('AdaCat', function() {
   })
 
   describe('#feed', function() {
+    it('does not allow owner to feed cat while sleeping', function() {
+      var myCat = new AdaCat('mittens', 'alex');
+      myCat.nap();
+      myCat.setHunger(7)
+      myCat.feed();
+      expect(myCat.hunger).to.equal(7);
+    })
     it('decreases the hunger attribute by 1', function() {
       var myCat = new AdaCat('mittens', 'alex')
       myCat.feed()
@@ -270,6 +277,38 @@ describe('AdaCat', function() {
       var myCat = new AdaCat('pusheen', 'raf')
       myCat.setTiredness(20);
       expect(myCat.fatigue).to.equal(15);
+    })
+  })
+
+  describe('#message', function() {
+    it("holds the cat's status message", function() {
+      var myCat = new AdaCat('pusheen', 'raf')
+      expect(myCat.message).to.equal('');
+    })
+
+    it("informs user the cat is eating", function() {
+      var myCat = new AdaCat('pusheen', 'raf')
+      myCat.feed();
+      expect(myCat.message).to.equal('pusheen is eating');
+    })
+
+    it("informs user the cat is sleeping", function() {
+      var myCat = new AdaCat('pusheen', 'raf')
+      myCat.nap();
+      expect(myCat.message).to.equal('pusheen is sleeping');
+    })
+
+    it("informs user the cat is playing", function() {
+      var myCat = new AdaCat('pusheen', 'raf')
+      myCat.play();
+      expect(myCat.message).to.equal('pusheen is playing');
+    })
+
+    it("resets the message when cat wakes up", function() {
+      var myCat = new AdaCat('pusheen', 'raf')
+      myCat.feed();
+      myCat.wakeUp();
+      expect(myCat.message).to.equal('');
     })
   })
 })
