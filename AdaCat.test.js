@@ -55,7 +55,7 @@ describe('AdaCat', function() {
       var myCat = new AdaCat('marmite', 'alex')
       var result = myCat.getDescription()
       var lines = result.split('\n')
-      expect(lines[4]).to.equal('marmite is awake.')
+      expect(lines[5]).to.equal('marmite is awake.')
     })
 
     it('tells you if the cat is asleep', function() {
@@ -63,7 +63,7 @@ describe('AdaCat', function() {
       myCat.nap()
       var result = myCat.getDescription()
       var lines = result.split('\n')
-      expect(lines[4]).to.equal('Shh! mc splinters is sleeping.')
+      expect(lines[5]).to.equal('Shh! mc splinters is sleeping.')
     })
 
     it('includes the cat size', function() {
@@ -78,6 +78,13 @@ describe('AdaCat', function() {
       var result = myCat.getDescription()
       var lines = result.split('\n')
       expect(lines[3]).to.equal('their health is 25/30.')
+    })
+
+    it('includes their fatigue level', function() {
+      var myCat = new AdaCat('mrmarmelade', 'raf');
+      var result = myCat.getDescription();
+      var lines = result.split('\n');
+      expect(lines[4]).to.equal('their fatigue is 0/15.');
     })
   })
 
@@ -108,6 +115,13 @@ describe('AdaCat', function() {
       var myCat = new AdaCat('apple', 'alex')
       myCat.nap()
       expect(myCat.isSleeping).to.equal(true)
+    })
+
+    it('sets fatigue attribute to 0',function() {
+      var myCat = new AdaCat('bubu', 'raf');
+      myCat.setTiredness(10);
+      myCat.nap();
+      expect(myCat.fatigue).to.equal(0);
     })
   })
 
@@ -237,6 +251,25 @@ describe('AdaCat', function() {
       myCat.hunger = 3
       var result = myCat.getHealth()
       expect(result).to.equal(0)
+    })
+  })
+  describe('#setTiredness', function() {
+    it('increasing the fatigue attribute by 1', function() {
+      var myCat = new AdaCat('pusheen', 'raf')
+      myCat.feed();
+      expect(myCat.fatigue).to.equal(1);
+    })
+
+    it('increasing the fatigue attribute by 3', function() {
+      var myCat = new AdaCat('pusheen', 'raf')
+      myCat.play();
+      expect(myCat.fatigue).to.equal(3);
+    })
+
+    it('does not increase fatigue above 15', function() {
+      var myCat = new AdaCat('pusheen', 'raf')
+      myCat.setTiredness(20);
+      expect(myCat.fatigue).to.equal(15);
     })
   })
 })
